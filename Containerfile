@@ -52,7 +52,7 @@ RUN python3 -m compileall -q searxng \
         -type f -exec gzip -9 -k {} \+ -exec brotli --best {} \+
 
 RUN sed -e 's|DEFAULT_BIND_ADDRESS="0.0.0.0:8080"|DEFAULT_BIND_ADDRESS="0.0.0.0:$PORT"|g' \
-        -e "s|su-exec searx:searx ||g" \
+        -e "s|su-exec searxng:searxng ||g" \
         -i dockerfiles/docker-entrypoint.sh
 
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/searxng/dockerfiles/docker-entrypoint.sh", "-f", "-s"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/searxng/dockerfiles/docker-entrypoint.sh", "-f"]
