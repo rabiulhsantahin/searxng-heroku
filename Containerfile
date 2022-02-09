@@ -11,7 +11,7 @@ ENV INSTANCE_NAME=searx \
 
 WORKDIR $CWD
 
-RUN adduser -u 977 -D -h "$CWD" -s /bin/sh searx
+RUN adduser -u 977 -D -h "$CWD" -s /bin/sh searxng
 
 RUN apk upgrade --no-cache \
  && apk add --no-cache --virtual build-dependencies \
@@ -35,19 +35,19 @@ RUN apk upgrade --no-cache \
         uwsgi \
         uwsgi-python3 \
         brotli \
- && git clone --depth 1 https://github.com/searx/searx . \
- && chown -R searx:searx . \
+ && git clone --depth 1 https://github.com/searxng/searxng . \
+ && chown -R searxng:searxng . \
  && pip3 install --upgrade pip \
  && pip3 install --no-cache -r requirements.txt \
  && apk del build-dependencies \
  && rm -rf /root/.cache
 
-USER searx
+USER searxng
 
-COPY settings.yml searx/settings.yml
+COPY settings.yml searxng/settings.yml
 
-RUN python3 -m compileall -q searx \
- && find searx/static -a \( -name "*.html" -o -name "*.css" -o -name "*.js" \
+RUN python3 -m compileall -q searxng \
+ && find searxng/static -a \( -name "*.html" -o -name "*.css" -o -name "*.js" \
         -o -name "*.svg" -o -name "*.ttf" -o -name "*.eot" \) \
         -type f -exec gzip -9 -k {} \+ -exec brotli --best {} \+
 
@@ -55,4 +55,4 @@ RUN sed -e 's|DEFAULT_BIND_ADDRESS="0.0.0.0:8080"|DEFAULT_BIND_ADDRESS="0.0.0.0:
         -e "s|su-exec searx:searx ||g" \
         -i dockerfiles/docker-entrypoint.sh
 
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/searx/dockerfiles/docker-entrypoint.sh", "-f"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/searxng/dockerfiles/docker-entrypoint.sh", "-f"]
