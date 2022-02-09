@@ -47,7 +47,7 @@ USER searxng
 COPY settings.yml searxng/settings.yml
 
 RUN python3 -m compileall -q searxng \
- && find searxng/static -a \( -name "*.html" -o -name "*.css" -o -name "*.js" \
+ && find searx/static -a \( -name "*.html" -o -name "*.css" -o -name "*.js" \
         -o -name "*.svg" -o -name "*.ttf" -o -name "*.eot" \) \
         -type f -exec gzip -9 -k {} \+ -exec brotli --best {} \+
 
