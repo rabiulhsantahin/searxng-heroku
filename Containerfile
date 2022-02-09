@@ -1,13 +1,13 @@
 FROM alpine:latest
 
 EXPOSE 8080
-VOLUME /etc/searx
+VOLUME /etc/searxng
 VOLUME /var/log/uwsgi
 
 ENV INSTANCE_NAME=searx \
-    SEARX_SETTINGS_PATH=/etc/searx/settings.yml \
-    UWSGI_SETTINGS_PATH=/etc/searx/uwsgi.ini \
-    CWD=/usr/local/searx
+    SEARX_SETTINGS_PATH=/etc/searxng/settings.yml \
+    UWSGI_SETTINGS_PATH=/etc/searxng/uwsgi.ini \
+    CWD=/usr/local/searxng
 
 WORKDIR $CWD
 
