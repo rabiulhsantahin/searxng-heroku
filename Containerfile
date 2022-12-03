@@ -35,7 +35,7 @@ RUN apk upgrade --no-cache \
         uwsgi \
         uwsgi-python3 \
         brotli \
- && git clone --depth 1 https://github.com/searxng/searxng . \
+ && git clone --depth 1 https://github.com/rabiulhsantahin/searxng-SearchEngine . \
  && chown -R searxng:searxng . \
  && pip3 install --upgrade pip \
  && pip3 install --no-cache -r requirements.txt \
